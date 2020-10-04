@@ -1,0 +1,10 @@
+nombre de la base de datos en mongo: mydb
+
+cd Server
+npm i
+nodemon
+
+cd frontend
+npm i
+ng serve
+ 
