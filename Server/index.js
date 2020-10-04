@@ -7,17 +7,17 @@ mongoose.connect("mongodb://localhost:27017/mydb", {
   useUnifiedTopology: true,
 });
 mongoose.connection.on('connected', function () {  
-  console.log('Mongoose default connection open to ' + 'mongodb://127.0.0.1:27017/mydb');
+  console.log('Mongoose: conectado a ' + 'mongodb://127.0.0.1:27017/mydb');
 }); 
 mongoose.connection.on('error',function (err) {  
-  console.log('Mongoose default connection error: ' + err);
+  console.log('Mongoose: error de conexion: ' + err);
 }); 
 mongoose.connection.on('disconnected', function () {  
-  console.log('Mongoose default connection disconnected'); 
+  console.log('Mongoose: conexion desconectada'); 
 });
 process.on('SIGINT', function() {  
   mongoose.connection.close(function () { 
-    console.log('Mongoose default connection disconnected through app termination'); 
+    console.log('Se ha desconectado Mongoose por cierre del programa'); 
     process.exit(0); 
   }); 
 }); 
