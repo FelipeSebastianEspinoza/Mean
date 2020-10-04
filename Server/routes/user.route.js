@@ -1,5 +1,5 @@
 const express = require("express");
-const  User   = require("../models/index.model");
+const User = require("../models/user.model");
 const router = express.Router();
 
 router.get("/", (req, res) => {
@@ -8,20 +8,27 @@ router.get("/", (req, res) => {
   });
 });
 router.post("/", (req, res) => {
-  user = new User({
+  const user = new User({
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
+    type: req.body.type,
   });
-  user.save(() => {
-    res.json(user);
-  });
+  user
+    .save()
+    .then((result) => {
+      res.json(user);
+      console.log(user);
+    })
+    .catch((err) => console.log(err));
+     
 });
 router.put("/:id", async (req, res) => {
   user = await User.findById(req.params.id);
   user.name = req.body.name;
   user.email = req.body.email;
   user.password = req.body.password;
+  user.type = req.body.type;
   user.save(() => {
     res.json(user);
   });

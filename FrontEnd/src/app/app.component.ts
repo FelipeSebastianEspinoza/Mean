@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { UserService } from './user.service';
-import { User } from './user';
+import { UserService } from './service/user.service';
+import { User } from './service/user';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
