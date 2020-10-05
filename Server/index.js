@@ -29,7 +29,8 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
-app.use("/", require("./routes/user.route"));
+app.use("/user", require("./routes/user.route"));
+app.use("/post", require("./routes/post.route"));
 const port = 3000 | process.env.PORT;
 
 app.listen(port);

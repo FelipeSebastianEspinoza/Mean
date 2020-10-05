@@ -12,15 +12,15 @@ export class UserService {
     this.selectedUser = new User();
   }
   getUsers(){
-   return this.http.get(`http://localhost:3000`)
+   return this.http.get(`http://localhost:3000/user`)
   }
   postUsers(user:User){
-   return this.http.post(`http://localhost:3000`,user)
+   return this.http.post(`http://localhost:3000/user`,user)
   }
   putUsers(user:User){
-   return this.http.put(`http://localhost:3000/${user._id}`,user)
+   return this.http.put(`http://localhost:3000/user/${user._id}`,user)
   }
   deleteUser(_id:string){
-    return this.http.delete(`http://localhost:3000/${_id}`)
+    return this.http.delete(`http://localhost:3000/user/${_id}`)
   }
 }
