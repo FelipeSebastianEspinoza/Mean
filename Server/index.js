@@ -1,36 +1,30 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-
-const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/mydb", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-mongoose.connection.on('connected', function () {  
-  console.log('Mongoose: conectado a ' + 'mongodb://127.0.0.1:27017/mydb');
-}); 
-mongoose.connection.on('error',function (err) {  
-  console.log('Mongoose: error de conexion: ' + err);
-}); 
-mongoose.connection.on('disconnected', function () {  
-  console.log('Mongoose: conexion desconectada'); 
-});
-process.on('SIGINT', function() {  
-  mongoose.connection.close(function () { 
-    console.log('Se ha desconectado Mongoose por cierre del programa'); 
-    process.exit(0); 
-  }); 
-}); 
-
 const cors = require("cors");
+const userRoute = require("./routes/user.route");
+const express = require("express");
+const properties = require("./config/properties");
+const DB = require("./config/db");
+
+DB();
 
 const app = express();
+const router = express.Router();
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.json());
+const bodyParser = require("body-parser");
+const bodyParserJSON = bodyParser.json();
+const bodyParserURLEncoded = bodyParser.urlencoded({ extended: true });
+
+app.use(bodyParserJSON);
+app.use(bodyParserURLEncoded);
+
 app.use(cors());
-app.use("/user", require("./routes/user.route"));
-app.use("/post", require("./routes/post.route"));
-const port = 3000 | process.env.PORT;
+app.use("/api", router);
+userRoute(router);
 
-app.listen(port);
+router.get("/", (req, res) => {
+  res.send("Hello from home");
+});
+app.use(router);
+
+app.listen(properties.PORT, () =>
+  console.log(`Server running on port ${properties.PORT}`)
+);
