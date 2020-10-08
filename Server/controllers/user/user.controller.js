@@ -1,7 +1,7 @@
 const User = require("./user.dao");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const SECRET_KEY = "secretkey123";
+const SECRET_KEY = "keysecret85";//el nombre no importa
 
 exports.createUser = (req, res, next) => {
   const newUser = {

@@ -21,7 +21,7 @@ app.use("/api", router);
 userRoute(router);
 
 router.get("/", (req, res) => {
-  res.send("Hello from home");
+  res.send("Index");
 });
 app.use(router);
 

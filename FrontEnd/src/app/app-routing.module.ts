@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { UsersComponent } from './users/users.component';
-import { PostsComponent } from './posts/posts.component';
+import { AuthModule } from './auth/auth.module'; //este dejar, ya que abajo x algun motivo no encuentra la ruta
 
 const routes: Routes = [
-  { path: '', redirectTo: '/users', pathMatch: 'full' },
-  { path: 'users', component: UsersComponent },
-  { path: 'posts', component: PostsComponent },
+  { path: '', redirectTo: '/auth', pathMatch: 'full' },
+  { path: 'auth', loadChildren: './auth/auth.module#AuthModule' },
 ];
 
 @NgModule({
