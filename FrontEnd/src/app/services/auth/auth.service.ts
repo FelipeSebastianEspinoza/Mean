@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
-import { UserI } from '../interfaces/user';
-import { JwtResponseI } from '../interfaces/jwt-response';
+import { UserI } from '../../interfaces/user';
+import { JwtResponseI } from '../../interfaces/jwt-response';
 import { tap } from 'rxjs/operators';
 import { Observable, BehaviorSubject } from 'rxjs';
 
@@ -29,8 +29,12 @@ export class AuthService {
       .post<JwtResponseI>(`${this.AUTH_SERVER}/login`, user)
       .pipe(
         tap((res: JwtResponseI) => {
+         console.log(res);
+         localStorage.setItem('User', res.dataUser.name);
+        
           if (res) {
             this.saveToken(res.dataUser.accesToken, res.dataUser.expiresIn);
+      
           }
         })
       );
@@ -39,6 +43,7 @@ export class AuthService {
     this.token = '';
     localStorage.removeItem('ACCESS_TOKEN');
     localStorage.removeItem('EXPIRES_IN');
+    localStorage.removeItem('User');
   }
 
   private saveToken(token: string, expiresIn: string): void {

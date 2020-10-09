@@ -1,0 +1,14 @@
+<div class="row">
+  <div
+    class="card col-lg-4"
+    *ngFor="let post of postService.posts"
+    style="width: 18rem; height: 18rem"
+  >
+    <img class="card-img-top" src={{post.image}}  style="max-width: 18rem; max-height: 14rem" alt="Card image cap" />
+    <div class="card-body">
+      <p class="card-text">
+       {{post.title}}
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 import { UserI } from '../../interfaces/user';
 
 @Component({
@@ -18,4 +18,6 @@ export class LoginComponent implements OnInit {
       this.router.navigateByUrl('/auth');
     });
   }
+
+ 
 }

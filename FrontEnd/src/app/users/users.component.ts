@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
-import { UserService } from '../services/user.service';
-import { User } from '../services/user';
+import { UserService } from '../services/auth/user.service';
+import { User } from '../services/auth/user';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
