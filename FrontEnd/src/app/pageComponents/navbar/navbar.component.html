@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="/">Home</a>
+  <a class="navbar-brand" (click)="homeButton()">Home</a>
   <button
     class="navbar-toggler"
     type="button"
@@ -15,26 +15,48 @@
   <div class="collapse navbar-collapse" id="navbarColor01">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#"
+        <a class="nav-link" (click)="homeButton()"
           >Home <span class="sr-only">(current)</span></a
         >
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="auth/register">Features</a>
+        <a class="nav-link" (click)="homeButton()">Features</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Pricing </a>
+        <a class="nav-link" (click)="homeButton()">Pricing </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">About</a>
+        <a class="nav-link" (click)="homeButton()">About</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <a class="btn btn-secondary my-2 my-sm-0 mr-1" href="/auth/login" role="button">Log in</a>
-     
-       
-      <a class="btn btn-secondary my-2 my-sm-0 ml-1" href="/auth/register" role="button">register</a>
-     
+    <a
+      *ngIf="userName"
+      class="btn btn-secondary my-2 my-sm-0 mr-1"
+      (click)="logout()"
+      role="button"
+      >Logout</a
+    >
+    <a
+    *ngIf="!userName"
+    class="btn btn-secondary my-2 my-sm-0 mr-1"
+    (click)="reloadTest()"
+    role="button"
+    >ReloadTest</a
+  >
+    <form class="form-inline my-2 my-lg-0" *ngIf="!userName">
+      <a
+        class="btn btn-secondary my-2 my-sm-0 mr-1"
+        (click)="loginButton()"
+        role="button"
+        >Log in</a
+      >
+
+      <a
+        class="btn btn-secondary my-2 my-sm-0 ml-1"
+        (click)="registerButton()"
+        role="button"
+        >register</a
+      >
     </form>
   </div>
 </nav>

@@ -12,6 +12,7 @@ export class AuthService {
   authSubject = new BehaviorSubject(false);
   private token: string;
   constructor(private httpClient: HttpClient) {}
+ 
 
   register(user: UserI): Observable<JwtResponseI> {
     return this.httpClient
@@ -31,10 +32,10 @@ export class AuthService {
         tap((res: JwtResponseI) => {
          console.log(res);
          localStorage.setItem('User', res.dataUser.name);
-        
+       
+
           if (res) {
             this.saveToken(res.dataUser.accesToken, res.dataUser.expiresIn);
-      
           }
         })
       );
@@ -45,7 +46,7 @@ export class AuthService {
     localStorage.removeItem('EXPIRES_IN');
     localStorage.removeItem('User');
   }
-
+ 
   private saveToken(token: string, expiresIn: string): void {
     localStorage.setItem('ACCESS_TOKEN', token);
     localStorage.setItem('EXPIRES_IN', expiresIn);
