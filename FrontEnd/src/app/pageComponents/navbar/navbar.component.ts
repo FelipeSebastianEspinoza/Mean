@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth/auth.service';
-import { pipe } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { DataService } from '../../services/data.service';
 
+ 
+import { AuthService } from '../../services/auth/auth.service';
+//let myObj = { name: 'Nixon', profession: 'Developer' };
+//localStorage.setItem(key, JSON.stringify(myObj));
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -11,19 +13,19 @@ import { map, take } from 'rxjs/operators';
   providers: [AuthService],
 })
 export class NavbarComponent implements OnInit {
-  userName: string;
-  subscription: any;
+  userName: string = null;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService:AuthService,private dataService: DataService, private router: Router, ) {}
 
-  ngOnInit(): void {
-    this.getUsers();
+  ngOnInit() {
+    this.dataService.userName$.subscribe((texto) => {
+      this.userName = texto;
+    });
+    this.getUsers()
   }
-  reloadTest() {
-    this.userName = localStorage.getItem('User');
-  }
+ 
   getUsers() {
-    this.userName = localStorage.getItem('User');
+    this.userName = sessionStorage.getItem('User');
   }
   logout() {
     this.authService.logout();

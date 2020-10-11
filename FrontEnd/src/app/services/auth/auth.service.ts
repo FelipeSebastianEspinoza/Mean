@@ -5,15 +5,18 @@ import { UserI } from '../../interfaces/user';
 import { JwtResponseI } from '../../interfaces/jwt-response';
 import { tap } from 'rxjs/operators';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { DataService } from '../data.service';
+
 
 @Injectable()
 export class AuthService {
   AUTH_SERVER: string = 'http://localhost:3000';
   authSubject = new BehaviorSubject(false);
   private token: string;
-  constructor(private httpClient: HttpClient) {}
- 
-
+  constructor(
+    private httpClient: HttpClient,
+    private dataService: DataService
+  ) {}
   register(user: UserI): Observable<JwtResponseI> {
     return this.httpClient
       .post<JwtResponseI>(`${this.AUTH_SERVER}/register`, user)
@@ -30,23 +33,22 @@ export class AuthService {
       .post<JwtResponseI>(`${this.AUTH_SERVER}/login`, user)
       .pipe(
         tap((res: JwtResponseI) => {
-         console.log(res);
-         localStorage.setItem('User', res.dataUser.name);
-       
-
+          sessionStorage.setItem('User', res.dataUser.name);
+          
+          this.dataService.userName$.emit(sessionStorage.getItem('User'));
           if (res) {
             this.saveToken(res.dataUser.accesToken, res.dataUser.expiresIn);
           }
         })
       );
   }
+ 
   logout(): void {
     this.token = '';
     localStorage.removeItem('ACCESS_TOKEN');
     localStorage.removeItem('EXPIRES_IN');
-    localStorage.removeItem('User');
+    sessionStorage.removeItem('User');
   }
- 
   private saveToken(token: string, expiresIn: string): void {
     localStorage.setItem('ACCESS_TOKEN', token);
     localStorage.setItem('EXPIRES_IN', expiresIn);

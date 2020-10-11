@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" (click)="homeButton()">Home</a>
+  <a class="navbar-brand" (click)="homeButton()">NavBar</a>
   <button
     class="navbar-toggler"
     type="button"
@@ -29,6 +29,13 @@
         <a class="nav-link" (click)="homeButton()">About</a>
       </li>
     </ul>
+     <a
+     *ngIf="userName"
+     class="btn btn-secondary my-2 my-sm-0 mr-1"
+     (click)="logout()"
+     role="button"
+     >{{userName}}</a
+   >
     <a
       *ngIf="userName"
       class="btn btn-secondary my-2 my-sm-0 mr-1"
@@ -36,13 +43,6 @@
       role="button"
       >Logout</a
     >
-    <a
-    *ngIf="!userName"
-    class="btn btn-secondary my-2 my-sm-0 mr-1"
-    (click)="reloadTest()"
-    role="button"
-    >ReloadTest</a
-  >
     <form class="form-inline my-2 my-lg-0" *ngIf="!userName">
       <a
         class="btn btn-secondary my-2 my-sm-0 mr-1"
@@ -50,12 +50,11 @@
         role="button"
         >Log in</a
       >
-
       <a
         class="btn btn-secondary my-2 my-sm-0 ml-1"
         (click)="registerButton()"
         role="button"
-        >register</a
+        >Register</a
       >
     </form>
   </div>

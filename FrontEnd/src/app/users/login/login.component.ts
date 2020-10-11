@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
 import { UserI } from '../../interfaces/user';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,11 @@ import { UserI } from '../../interfaces/user';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private dataService: DataService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -18,6 +23,4 @@ export class LoginComponent implements OnInit {
       this.router.navigateByUrl('/auth');
     });
   }
-
- 
 }
