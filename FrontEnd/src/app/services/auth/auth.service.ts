@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserI } from '../../interfaces/user';
 import { JwtResponseI } from '../../interfaces/jwt-response';
-import { tap } from 'rxjs/operators';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { DataService } from '../data.service';
-
+import { error } from '@angular/compiler/src/util';
 
 @Injectable()
 export class AuthService {
@@ -32,9 +32,9 @@ export class AuthService {
     return this.httpClient
       .post<JwtResponseI>(`${this.AUTH_SERVER}/login`, user)
       .pipe(
+        catchError(this.handleError),
         tap((res: JwtResponseI) => {
           sessionStorage.setItem('User', res.dataUser.name);
-          
           this.dataService.userName$.emit(sessionStorage.getItem('User'));
           if (res) {
             this.saveToken(res.dataUser.accesToken, res.dataUser.expiresIn);
@@ -42,7 +42,11 @@ export class AuthService {
         })
       );
   }
- 
+
+  handleError(error) {
+    return throwError(error);
+  }
+
   logout(): void {
     this.token = '';
     localStorage.removeItem('ACCESS_TOKEN');

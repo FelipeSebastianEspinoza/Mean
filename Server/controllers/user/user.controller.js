@@ -1,17 +1,17 @@
-const User = require("./user.dao");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
 const SECRET_KEY = "keysecret85";//el nombre no importa
+const User = require("./user.dao");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 exports.createUser = (req, res, next) => {
   const newUser = {
-    name: req.body.name,
+    created_at: new Date(),
+    deleted_at: "",
     email: req.body.email,
+    name: req.body.name,
     password: bcrypt.hashSync(req.body.password),
     type: "1",
-    created_at: new Date(),
     updated_at: "",
-    deleted_at: "",
     verification: false,
   };
   User.create(newUser, (err, user) => {
@@ -29,7 +29,6 @@ exports.createUser = (req, res, next) => {
       accessToken: accessToken,
       expiresIn: expiresIn,
     };
-
     res.send({ dataUser });
   });
 };
@@ -42,7 +41,7 @@ exports.loginUser = (req, res, next) => {
   User.findOne({ email: userData.email }, (err, user) => {
     if (err) return res.status(500).send("Server error");
     if (!user) {
-      res.status(409).send({ message: "Error en los campos" });
+     res.status(409).send({ message: "Error en los campos" });
     } else {
       const resultPassword = bcrypt.compareSync(
         userData.password,
